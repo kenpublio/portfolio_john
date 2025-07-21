@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>John Rafael - Portfolio</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #e63946;
+      --secondary-color: #f1faee;
+      --dark-color: #1d3557;
+      --light-color: #a8dadc;
+      --background-dark: #0a0a0a;
+      --background-light: #1a1a1a;
+      --text-light: #f8f9fa;
+      --text-dark: #212529;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      text-decoration: none;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    html {
+      font-size: 62.5%;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--background-dark);
+      color: var(--text-light);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 2rem 9%;
+      background-color: rgba(10, 10, 10, 0.9);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .logo {
+      font-size: 3.5rem;
+      color: var(--primary-color);
+      font-weight: 800;
+      cursor: pointer;
+      transition: 0.5s ease;
+      letter-spacing: 1px;
+    }
+
+    .logo:hover {
+      transform: scale(1.05);
+      text-shadow: 0 0 15px rgba(230, 57, 70, 0.5);
+    }
+
+    nav {
+      display: flex;
+      gap: 3.5rem;
+    }
+
+    nav a {
+      font-size: 1.8rem;
+      color: var(--secondary-color);
+      font-weight: 500;
+      transition: 0.3s ease;
+      position: relative;
+      padding: 0.5rem 0;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: var(--primary-color);
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover,
+    nav a.active {
+      color: var(--primary-color);
+    }
+
+    nav a:hover::after,
+    nav a.active::after {
+      width: 100%;
+    }
+
+    .hamburger {
+      display: none;
+      font-size: 3rem;
+      background: none;
+      color: white;
+      border: none;
+      cursor: pointer;
+      z-index: 101;
+      transition: transform 0.3s ease;
+    }
+
+    .hamburger.active {
+      transform: rotate(90deg);
+    }
+
+    @media (max-width: 992px) {
+      header {
+        padding: 2rem 5%;
+      }
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 70%;
+        max-width: 300px;
+        height: 100vh;
+        background-color: var(--background-light);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition: right 0.5s ease;
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+      }
+
+      nav.active {
+        right: 0;
+      }
+
+      .hamburger {
+        display: block;
+      }
+    }
+
+    section {
+      min-height: 100vh;
+      padding: 10rem 9% 5rem;
+    }
+
+    .home {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8rem;
+      background: linear-gradient(135deg, var(--background-dark) 0%, var(--background-light) 100%);
+    }
+
+    .home-content {
+      max-width: 600px;
+    }
+
+    .home-content h1 {
+      font-size: 5.5rem;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 2rem;
+    }
+
+    .home-content h1 span {
+      color: var(--primary-color);
+    }
+
+    .home-content h3 {
+      font-size: 3.2rem;
+      margin-bottom: 2rem;
+      font-weight: 600;
+    }
+
+    .home-content h3 span {
+      color: var(--primary-color);
+      position: relative;
+    }
+
+    .home-content h3 span::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -5px;
+      width: 100%;
+      height: 3px;
+      background: var(--primary-color);
+      animation: typing 3s steps(20) infinite;
+    }
+
+    .home-content p {
+      font-size: 1.8rem;
+      margin: 2rem 0 3rem;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .home-img {
+      position: relative;
+      width: 350px;
+      height: 350px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .home-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 10px solid var(--primary-color);
+      box-shadow: 0 0 30px var(--primary-color);
+      animation: floatImage 4s ease-in-out infinite;
+    }
+
+    .home-img::before {
+      content: '';
+      position: absolute;
+      top: -20px;
+      left: -20px;
+      right: -20px;
+      bottom: -20px;
+      border-radius: 50%;
+      border: 5px solid var(--light-color);
+      opacity: 0.5;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 1.5rem 3.2rem;
+      background: transparent;
+      border-radius: 4rem;
+      font-size: 1.6rem;
+      color: var(--primary-color);
+      letter-spacing: 0.1rem;
+      font-weight: 600;
+      border: 2px solid var(--primary-color);
+      transition: 0.5s ease;
+      cursor: pointer;
+      margin-top: 2rem;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 100%;
+      background: var(--primary-color);
+      z-index: -1;
+      transition: 0.5s ease;
+    }
+
+    .btn:hover {
+      color: var(--text-light);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(230, 57, 70, 0.3);
+    }
+
+    .btn:hover::before {
+      width: 100%;
+    }
+
+    section h2 {
+      font-size: 4.5rem;
+      margin-bottom: 3rem;
+      text-align: center;
+      position: relative;
+    }
+
+    section h2::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 4px;
+      background: var(--primary-color);
+      border-radius: 2px;
+    }
+
+    section p {
+      font-size: 1.8rem;
+      max-width: 800px;
+      margin: 0 auto 3rem;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .services-container, .skills-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 3rem;
+      margin-top: 5rem;
+    }
+
+    .service-box, .skill-box {
+      background: var(--background-light);
+      padding: 3rem 2rem;
+      border-radius: 1rem;
+      text-align: center;
+      transition: transform 0.5s ease;
+      border: 2px solid transparent;
+    }
+
+    .service-box:hover, .skill-box:hover {
+      transform: translateY(-10px);
+      border-color: var(--primary-color);
+      box-shadow: 0 10px 20px rgba(230, 57, 70, 0.1);
+    }
+
+    .service-box i, .skill-box i {
+      font-size: 5rem;
+      color: var(--primary-color);
+      margin-bottom: 2rem;
+    }
+
+    .service-box h3, .skill-box h3 {
+      font-size: 2.4rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .service-box p, .skill-box p {
+      font-size: 1.6rem;
+      text-align: center;
+    }
+
+    .education-content, .experience-content {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      margin-top: 5rem;
+    }
+
+    .education-box, .experience-box {
+      background: var(--background-light);
+      padding: 3rem;
+      border-radius: 1rem;
+      position: relative;
+      border-left: 4px solid var(--primary-color);
+    }
+
+    .education-box h3, .experience-box h3 {
+      font-size: 2.2rem;
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+    }
+
+    .education-box p, .experience-box p {
+      font-size: 1.6rem;
+      text-align: left;
+      margin-bottom: 1rem;
+    }
+
+    .education-box span, .experience-box span {
+      font-size: 1.4rem;
+      color: var(--light-color);
+      display: block;
+      margin-bottom: 1rem;
+    }
+
+    .contact-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 5rem;
+      margin-top: 5rem;
+    }
+
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .contact-item i {
+      font-size: 2.5rem;
+      color: var(--primary-color);
+    }
+
+    .contact-item div h3 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .contact-item div p {
+      font-size: 1.6rem;
+      text-align: left;
+      margin: 0;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .contact-form {
+      background: var(--background-light);
+      padding: 3rem;
+      border-radius: 1rem;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      background: var(--background-dark);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 0.5rem;
+      color: var(--text-light);
+      font-size: 1.6rem;
+    }
+
+    .contact-form textarea {
+      height: 150px;
+      resize: none;
+    }
+
+    .contact-form .btn {
+      width: 100%;
+    }
+
+    footer {
+      background: var(--background-light);
+      padding: 3rem 9%;
+      text-align: center;
+    }
+
+    footer p {
+      font-size: 1.6rem;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .social-media {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .social-media a {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      width: 50px;
+      height: 50px;
+      background: var(--background-dark);
+      border-radius: 50%;
+      font-size: 2rem;
+      color: var(--text-light);
+      transition: 0.3s ease;
+    }
+
+    .social-media a:hover {
+      background: var(--primary-color);
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(230, 57, 70, 0.3);
+    }
+
+    @keyframes floatImage {
+      0% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-20px);
+      }
+      100% {
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+        opacity: 0.5;
+      }
+      50% {
+        transform: scale(1.05);
+        opacity: 0.3;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 0.5;
+      }
+    }
+
+    @keyframes typing {
+      0% {
+        width: 0;
+      }
+      50% {
+        width: 100%;
+      }
+      100% {
+        width: 0;
+      }
+    }
+
+    @media (max-width: 992px) {
+      section {
+        padding: 10rem 5% 5rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .home {
+        flex-direction: column-reverse;
+        gap: 5rem;
+        text-align: center;
+      }
+
+      .home-content h1 {
+        font-size: 4.5rem;
+      }
+
+      .home-content h3 {
+        font-size: 2.8rem;
+      }
+
+      .home-img {
+        width: 280px;
+        height: 280px;
+      }
+
+      section h2 {
+        font-size: 3.8rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .home-content h1 {
+        font-size: 3.8rem;
+      }
+
+      .home-content h3 {
+        font-size: 2.4rem;
+      }
+
+      section h2 {
+        font-size: 3.2rem;
+      }
+
+      .home-img {
+        width: 220px;
+        height: 220px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="#" class="logo">JohnDev</a>
+    <nav id="navMenu">
+      <a href="#home" class="active">Home</a>
+      <a href="#services">Services</a>
+      <a href="#skills">Skills</a>
+      <a href="#education">Education</a>
+      <a href="#experience">Experience</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button class="hamburger" id="hamburger">
+      <i class="fas fa-bars"></i>
+    </button>
+  </header>
+
+  <section id="home" class="home">
+    <div class="home-content">
+      <h1>Hi, I'm <span>John Rafael</span></h1>
+      <h3>I'm a <span>Software Developer</span></h3>
+      <p>Passionate about creating elegant solutions to complex problems. With expertise in full-stack development, I build digital experiences that are both functional and beautiful.</p>
+      <a href="#contact" class="btn">Hire Me</a>
+    </div>
+    <div class="home-img">
+      <img src="me.jpg" alt="Profile Picture" />
+    </div>
+  </section>
+
+  <section id="services">
+    <h2>Services</h2>
+    <p>I offer comprehensive digital solutions tailored to your business needs. Here's what I can do for you:</p>
+    
+    <div class="services-container">
+      <div class="service-box">
+        <i class="fas fa-code"></i>
+        <h3>Web Development</h3>
+        <p>Custom websites and web applications built with modern technologies for optimal performance and user experience.</p>
+      </div>
+      
+      <div class="service-box">
+        <i class="fas fa-mobile-alt"></i>
+        <h3>Mobile Development</h3>
+        <p>Cross-platform mobile applications that work seamlessly on both iOS and Android devices.</p>
+      </div>
+      
+      <div class="service-box">
+        <i class="fas fa-paint-brush"></i>
+        <h3>UI/UX Design</h3>
+        <p>Beautiful, intuitive interfaces designed with user experience principles in mind.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <h2>Skills</h2>
+    <p>I've honed my skills across various technologies and disciplines to deliver top-notch solutions.</p>
+    
+    <div class="skills-container">
+      <div class="skill-box">
+        <i class="fab fa-html5"></i>
+        <h3>Frontend</h3>
+        <p>HTML5, CSS3, JavaScript, React, Vue.js, Bootstrap, Tailwind CSS</p>
+      </div>
+      
+      <div class="skill-box">
+        <i class="fas fa-server"></i>
+        <h3>Backend</h3>
+        <p>Node.js, Express, Python, Django, PHP, Laravel, MySQL, MongoDB</p>
+      </div>
+      
+      <div class="skill-box">
+        <i class="fas fa-tools"></i>
+        <h3>Tools & More</h3>
+        <p>Git, Docker, AWS, Firebase, Figma, Agile Methodologies</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="education">
+    <h2>Education</h2>
+    <p>My academic background has provided me with a strong foundation for my technical career.</p>
+    
+    <div class="education-content">
+      <div class="education-box">
+        <h3>Bachelor of Science in Technology</h3>
+        <span>2024 - 2026</span>
+        <p>Eastern Visayas State University (EVSU)</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <h2>Experience</h2>
+    <p>I've had the privilege to work with amazing teams on challenging projects.</p>
+    
+    <div class="experience-content">
+      <div class="experience-box">
+        <h3>Senior Software Developer</h3>
+        <span>Present</span>
+        <p>Tech Solutions Inc.</p>
+        <p>Leading a team of developers to build enterprise-level applications, implementing CI/CD pipelines, and mentoring junior developers.</p>
+      </div>
+      
+      <div class="experience-box">
+        <h3>Junior Web Developer</h3>
+        <span>2025</span>
+        <p>Digital Creations Agency</p>
+        <p>Developed and maintained client websites, implemented responsive designs, and optimized web performance.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2>Contact</h2>
+    <p>Let's discuss how I can help bring your ideas to life. Get in touch!</p>
+    
+    <div class="contact-container">
+      <div class="contact-info">
+        <div class="contact-item">
+          <i class="fas fa-envelope"></i>
+          <div>
+            <h3>Email</h3>
+            <p>johnrafaelcostan2@gmail.com</p>
+          </div>
+        </div>
+        
+        <div class="contact-item">
+          <i class="fas fa-phone"></i>
+          <div>
+            <h3>Phone</h3>
+            <p>+63 970 085 7546</p>
+          </div>
+        </div>
+        
+        <div class="contact-item">
+          <i class="fas fa-map-marker-alt"></i>
+          <div>
+            <h3>Location</h3>
+            <p>Ormoc City, Philippines</p>
+          </div>
+        </div>
+        
+        <div class="social-media">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#"><i class="fab fa-github"></i></a>
+        </div>
+      </div>
+      
+      <div class="contact-form">
+        <form action="#" method="POST">
+          <input type="text" placeholder="Your Name" required>
+          <input type="email" placeholder="Your Email" required>
+          <input type="text" placeholder="Subject">
+          <textarea placeholder="Your Message" required></textarea>
+          <button type="submit" class="btn">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="social-media">
+      <a href="#"><i class="fab fa-facebook-f"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-linkedin-in"></i></a>
+      <a href="#"><i class="fab fa-github"></i></a>
+    </div>
+    <p>&copy; 2023 John Rafael. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('navMenu');
+    
+    hamburger.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+      hamburger.classList.toggle('active');
+    });
+    
+    // Close mobile menu when clicking a link
+    document.querySelectorAll('#navMenu a').forEach(link => {
+      link.addEventListener('click', () => {
+        navMenu.classList.remove('active');
+        hamburger.classList.remove('active');
+      });
+    });
+    
+    
+    window.addEventListener('scroll', () => {
+      const header = document.querySelector('header');
+      header.classList.toggle('scrolled', window.scrollY > 50);
+    });
+    
+    
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('nav a');
+    
+    window.addEventListener('scroll', () => {
+      let current = '';
+      
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        
+        if (pageYOffset >= sectionTop - 300) {
+          current = section.getAttribute('id');
+        }
+      });
+      
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href').includes(current)) {
+          link.classList.add('active');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
